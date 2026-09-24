@@ -42,8 +42,18 @@
 
 ```
 agent-study/
-├── notes/   # 各章节学习笔记，按 chapter01～chapter16 组织
-└── code/    # 实践代码
+├── notes/                              # 学习笔记（按教程四部分组织，每章一个文件）
+│   ├── part1-智能体基础/                # 第一部分：第 1～3 章
+│   ├── part2-构建LLM智能体/             # 第二部分：第 4～7 章
+│   ├── part3-高级扩展/                  # 第三部分：第 8～12 章
+│   └── part4-综合案例/                  # 第四部分：第 13～16 章
+├── code/                               # 各章实践代码，命名 chapterXX-主题关键词
+├── projects/                           # 第四部分综合项目
+│   ├── travel-assistant/               # 第 13 章：智能旅行助手
+│   ├── deep-research-agent/            # 第 14 章：自动化深度研究智能体
+│   └── cyber-town/                     # 第 15 章：赛博小镇
+├── summary/                            # 每部分学完后的阶段总结
+└── README.md                           # 学习进度总览
 ```
 
 ## 💡 学习方式
