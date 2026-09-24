@@ -28,8 +28,8 @@ pip install requests tavily-python openai
 - 指令模板的输出格式要求是整个 Agent 的灵魂，照教程抄一遍即可
 - 行动循环：每次把【历史对话 + 新 Observation】发回给 LLM
 - 用正则或字符串匹配从 LLM 回复中提取 `Action`，再解析成函数名 + 参数
-- LLM 输出 `Finish[...] 时说明任务完成，退出循环
-- 遇到问题记录到 `notes/part1-智能体基础/chapter01-初识智能体.md 的踩坑区
+- LLM 输出 `Finish[最终答案]` 时说明任务完成，退出循环
+- 遇到问题记录到 `notes/part1-智能体基础/chapter01-初识智能体.md` 的踩坑区
 
 ---
 
