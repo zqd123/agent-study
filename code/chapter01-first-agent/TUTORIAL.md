@@ -5,14 +5,14 @@
 
 ## ✅ 搭建清单（边做边勾）
 
-- [ ] 1. 创建虚拟环境并安装依赖
-- [ ] 2. 准备一个 LLM API Key（OpenAI 兼容接口即可）
-- [ ] 3. 实现 get_weather 工具（wttr.in，无需注册）
-- [ ] 4. 实现 get_attraction 工具
-- [ ] 5. 编写 AGENT_SYSTEM_PROMPT 指令模板
-- [ ] 6. 接入 LLM 并实现行动循环（解析 Thought/Action）
-- [ ] 7. 运行：'查询北京天气并根据天气推荐景点'
-- [ ] 8. 观察每一轮 Thought/Action/Observation 并记录到笔记
+- [x] 1. 创建虚拟环境并安装依赖
+- [x] 2. 准备一个 LLM API Key（OpenAI 兼容接口即可）
+- [x] 3. 实现 get_weather 工具（wttr.in，无需注册）
+- [x] 4. 实现 get_attraction 工具
+- [x] 5. 编写 AGENT_SYSTEM_PROMPT 指令模板
+- [x] 6. 接入 LLM 并实现行动循环（解析 Thought/Action）
+- [x] 7. 运行：'查询北京天气并根据天气推荐景点'
+- [x] 8. 观察每一轮 Thought/Action/Observation 并记录到笔记
 
 ## 🛠️ 环境准备（参考命令，自己执行）
 

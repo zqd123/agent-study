@@ -2,7 +2,7 @@
 
 > 对应教程：`hello-agents/docs/chapter1/第一章 初识智能体.md`
 > 学习日期：2026-09-24
-> 状态：概念部分（1.1 / 1.2 / 1.4）已完成 ✅ ｜ 动手实践（1.3）未开始 ⏳
+> 状态：概念部分（1.1 / 1.2 / 1.4）已完成 ✅ ｜ 动手实践（1.3）已完成 ✅
 
 ## 🎯 本章目标
 
@@ -45,10 +45,18 @@
 
 ## 💻 实践记录
 
-- ⏳ 1.3 节实战（5 分钟实现旅行助手智能体）待开始
-- 准备清单：Python 环境、`pip install requests tavily-python openai`、一个 LLM API Key（OpenAI 兼容接口即可）
-- 代码将放至：`code/chapter01-first-agent/`
-- 踩过的坑：（待实践后记录）
+- ✅ 1.3 节实战完成：`code/chapter01-first-agent/agent.py`，3 轮循环跑通
+- 技术栈：Python + openai SDK（GLM 模型）+ wttr.in 天气 API + Tavily 搜索
+- 运行观察：智能体自主完成「查天气 → 根据雨天推景点 → Finish 汇总」三步，全程无写死规则
+- 踩过的坑：
+
+  1. **多行 Finish 答案解析崩溃**（P0 级别教训）
+     - 现象：模型输出的最终答案带多行 Markdown 排版，`Finish[...]` 内容跨越多行，程序在 `re.match(r"Finish\[(.*)\]", action_str).group(1)` 处报 `AttributeError: 'NoneType' object has no attribute 'group'`
+     - 根因：同文件里两处正则的 `re.DOTALL` 标志**不一致**——解析 `Action:` 时加了 DOTALL 能跨行捕获多行内容，而解析 `Finish[...]` 时没加，`.*` 无法跨越换行符，闭括号 `]` 在几行之后 → 匹配失败返回 `None` → 对 None 调 `.group(1)` 崩溃
+     - 修复：`Finish` 正则补上 `re.DOTALL`，并增加 `if finish_match` 空值保护 + 兜底逻辑（格式不标准时取括号后内容）
+     - **启示：无法控制 LLM 的输出格式**。提示词写了"Action 必须在同一行"，但模型在 Finish 阶段会自然输出多行 Markdown。生产级 Agent 的解析必须防御性设计：判空、兜底、超时、重试
+  2. **密钥硬编码风险**：最初把 API Key 直接写在代码里，已全部迁移到 `.env` 文件（python-dotenv 加载），并提交不含密钥的 `.env.example` 模板。`.env` 永远不进 Git
+  3. **环境变量赋 None 崩溃**：`os.environ['K'] = None` 会抛 TypeError（os.environ 只接受字符串），且"读出来再写回自己"是冗余操作，已删除
 
 ## ❓ 疑问与思考
 

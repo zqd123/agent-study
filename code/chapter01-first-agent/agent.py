@@ -184,7 +184,11 @@ for i in range(5):  # 假设最多循环5次
     action_str = action_match.group(1).strip()
 
     if action_str.startswith("Finish"):
-        final_answer = re.match(r"Finish\[(.*)\]", action_str).group(1)
+        finish_match = re.match(r"Finish\[(.*)\]", action_str, re.DOTALL)  # ← 加 re.DOTALL
+        if finish_match:                                                   # ← 加空值保护
+            final_answer = finish_match.group(1)
+        else:  # 模型输出 Finish 但格式不标准时，兜底取括号后的内容
+            final_answer = action_str[6:].strip("[] ")  # 去掉开头的 "Finish"
         print(f"任务完成，最终答案: {final_answer}")
         break
     
