@@ -70,7 +70,7 @@ if __name__ == "__main__":
        llmClient = HelloAgentsLLM()
 
        exampleMessage = [
-           {"role":"system", "content":"You are a helpful assistant that writes Python code."},
+           {"role":"system", "content":"你是一名可编写 Python 代码的得力助手。"},
            {"role":"user","content":"写一个快速排序算法"}
        ]
 
