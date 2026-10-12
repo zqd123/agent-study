@@ -170,33 +170,33 @@ class ReActAgent:
         return action_text.strip().strip("`").strip("*").strip()
 
 # 下面是测试验证代码
-# if __name__ == "__main__":
-#     def mock_weather(city: str) -> str:
-#         return f"{city} 今天晴，25°C"
+if __name__ == "__main__":
+    def mock_weather(city: str) -> str:
+        return f"{city} 今天晴，25°C"
 
-#     def mock_search(query: str) -> str:
-#         return f"搜索结果：{query} 适合户外运动。"
+    def mock_search(query: str) -> str:
+        return f"搜索结果：{query} 适合户外运动。"
 
-#     tool_executor = ToolExecutor()
+    tool_executor = ToolExecutor()
 
-#     tool_executor.register_tool(
-#         name="Weather",
-#         description="查询指定城市今天的天气。",
-#         func=mock_weather
-#     )
+    tool_executor.register_tool(
+        name="Weather",
+        description="查询指定城市今天的天气。",
+        func=mock_weather
+    )
 
-#     tool_executor.register_tool(
-#         name="Search",
-#         description="搜索相关信息。",
-#         func=mock_search
-#     )
+    tool_executor.register_tool(
+        name="Search",
+        description="搜索相关信息。",
+        func=mock_search
+    )
 
-#     llm = HelloAgentsLLM()
+    llm = HelloAgentsLLM()
 
-#     agent = ReActAgent(
-#         llm_client=llm,
-#         tool_executor=tool_executor,
-#         max_steps=5
-#     )
+    agent = ReActAgent(
+        llm_client=llm,
+        tool_executor=tool_executor,
+        max_steps=5
+    )
 
-#     agent.run("北京今天天气怎么样？适合户外运动吗？")
+    agent.run("北京今天天气怎么样？适合户外运动吗？")
