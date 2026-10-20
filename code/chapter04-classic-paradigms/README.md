@@ -8,7 +8,7 @@
 ## 学习目标
 
 1. 封装一个可复用的 LLM 客户端
-2. 理解 `Thought -> Action -> Observation` 循环
+2. 理解并实现 `Thought -> Action -> Observation` 循环
 3. 亲手实现最小 ReAct Agent
 4. 理解 Plan-and-Solve 的“先规划后执行”
 5. 理解 Reflection 的“生成-审查-修正”机制
@@ -21,7 +21,7 @@ code/chapter04-classic-paradigms/
 ├── requirements.txt
 ├── .env.example
 ├── llm_client.py          # 通用 LLM 调用客户端
-├── tools.py               # 工具定义与执行器
+├── tools.py               # 工具注册、描述与执行函数获取
 ├── react_agent.py         # ReAct 范式
 ├── plan_and_solve.py      # Plan-and-Solve 范式
 └── reflection.py          # Reflection 范式
@@ -148,6 +148,5 @@ python3 reflection.py
 
 1. Reflection 中，重复调用 `run()` 时可以先清空 `Memory`
 2. LLM 调用失败时，可以在关键流程中提前终止，而不是继续把空字符串送入下一轮
-3. Reflection 提示词中可以移除教程遗留的 `<strong>` HTML 标签
 4. ReAct 的 Action 解析可以继续增强，兼容更多模型输出风格
 5. Plan-and-Solve 可以补充异常情况处理，例如计划为空、单步执行失败、模型输出不稳定等场景

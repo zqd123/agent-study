@@ -40,7 +40,7 @@ class Memory:
         trajectory_parts = []
         for record in self.records:
             if record["type"] == "execution":
-                trajectory_parts.append(f"--- 上一轮尝试（代码）---\n{record["content"]}")
+                trajectory_parts.append(f"--- 上一轮尝试（代码）---\n{record['content']}")
             elif record["type"] == "reflection":
                 trajectory_parts.append(f"--- 评审员反馈---\n{record['content']}")
         return "\n\n".join(trajectory_parts)
@@ -68,7 +68,7 @@ INITIAL_PROMPT_TEMPLATE = """
 # 反思提示词
 REFLECT_PROMPT_TEMPLATE = """
 你是一位极其严格的代码评审专家和资深算法工程师，对代码的性能有极致的要求。
-你的任务是审查以下Python代码，并专注于找出其在<strong>算法效率</strong>上的主要瓶颈。
+你的任务是审查以下Python代码，并专注于找出其在**算法效率**上的主要瓶颈。
 
 # 原始任务:
 {task}
@@ -78,7 +78,7 @@ REFLECT_PROMPT_TEMPLATE = """
 {code}
 ```
 
-请分析该代码的时间复杂度，并思考是否存在一种<strong>算法上更优</strong>的解决方案来显著提升性能。
+请分析该代码的时间复杂度，并思考是否存在一种**算法上更优**的解决方案来显著提升性能。
 如果存在，请清晰地指出当前算法的不足，并提出具体的、可行的改进算法建议（例如，使用筛法替代试除法）。
 如果代码在算法层面已经达到最优，才能回答“无需改进”。
 
@@ -112,7 +112,7 @@ class ReflectionAgent:
     def run(self, task: str):
         print(f"\n--- 开始处理任务 ---\n任务：{task}")
 
-        # --- 1.初始之行 ---
+        # --- 1.初始执行 ---
         print("\n--- 正在进行初始尝试 ---")
         initial_prompt = INITIAL_PROMPT_TEMPLATE.format(task=task)
         initial_code = self._get_llm_response(initial_prompt)
