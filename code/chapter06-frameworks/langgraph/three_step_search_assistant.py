@@ -18,7 +18,10 @@ from langgraph.graph.message import add_messages
 from tavily import TavilyClient
 
 # 教程在模块加载时读取环境变量
-load_dotenv()
+# 统一加载仓库根目录 .env（路径：<chapter>/ -> 仓库根目录）
+from pathlib import Path
+
+load_dotenv(Path(__file__).resolve().parents[3] / ".env")
 
 #  按教程初始化全局 llm 和 tavily_client
 llm = ChatOpenAI(

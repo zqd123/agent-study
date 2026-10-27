@@ -16,7 +16,10 @@ from autogen_ext.models.openai import OpenAIChatCompletionClient
 from dotenv import load_dotenv
 
 # 从当前示例目录下的 .env 文件加载模型、API Key 和 Base URL 配置。
-load_dotenv()
+# 统一加载仓库根目录 .env（路径：<chapter>/ -> 仓库根目录）
+from pathlib import Path
+
+load_dotenv(Path(__file__).resolve().parents[3] / ".env")
 
 
 def create_openai_model_client():

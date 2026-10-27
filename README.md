@@ -56,6 +56,34 @@ agent-study/
 └── README.md                           # 学习进度总览
 ```
 
+## 🔐 环境变量配置
+
+所有章节代码统一读取仓库根目录的 `.env`：
+
+```text
+agent-study/
+├── .env                 # 本地真实配置，不提交 Git
+└── .env.example         # 配置模板，提交 Git
+```
+
+复制模板后填入自己的密钥：
+
+```bash
+cp .env.example .env
+```
+
+代码中统一使用这些通用变量：
+
+```env
+LLM_MODEL_ID=模型名
+LLM_API_KEY=模型服务密钥
+LLM_BASE_URL=OpenAI兼容接口地址
+LLM_TIMEOUT=60
+TAVILY_API_KEY=Tavily密钥
+SERPAPI_API_KEY=SerpAPI密钥
+DASHSCOPE_API_KEY=DashScope密钥
+```
+
 ## 💡 学习方式
 
 1. 按章节顺序学习教程，优先阅读在线版本。

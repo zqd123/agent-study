@@ -14,7 +14,10 @@ from dotenv import load_dotenv
 from typing import List,Dict
 
 # 加载 .env 文件中的环境变量
-load_dotenv()
+# 统一加载仓库根目录 .env（路径：<chapter>/ -> 仓库根目录）
+from pathlib import Path
+
+load_dotenv(Path(__file__).resolve().parents[2] / ".env")
 
 class HelloAgentsLLM:
     """

@@ -5,7 +5,10 @@ from tavily import TavilyClient
 from openai import OpenAI
 import re
 
-load_dotenv()  # 自动加载同目录下的 .env 文件
+# 统一加载仓库根目录 .env（路径：<chapter>/ -> 仓库根目录）
+from pathlib import Path
+
+load_dotenv(Path(__file__).resolve().parents[2] / ".env")
 
 # ============================================================
 # 工具层：智能体的"手"
@@ -161,9 +164,9 @@ class OpenAICompatibleClient:
             return "错误：调用大语言模型时发生错误"
 
 # 1. 配置LLM客户端（密钥和模型名统一从 .env 读取，代码中不出现明文）
-API_KEY = os.environ.get("OPENAI_API_KEY")
-BASE_URL = os.environ.get("OPENAI_API_BASE_URL")
-MODEL_ID = os.environ.get("MODEL_ID")
+API_KEY = os.environ.get("LLM_API_KEY")
+BASE_URL = os.environ.get("LLM_BASE_URL")
+MODEL_ID = os.environ.get("LLM_MODEL_ID")
 
 
 llm = OpenAICompatibleClient(
