@@ -103,18 +103,18 @@ agentscope/
 
 ### 第五阶段：简化版三国狼人杀
 
-不要一开始照抄教程完整游戏。建议先做一个简化版：
+不要一开始照抄教程完整游戏。当前先做一个可运行的简化版：
 
-- 3 个 Agent
-- 角色：狼人、预言家、村民
+- 4 个 Agent
+- 角色：1 狼人、1 预言家、2 村民
 - 流程：
-  1. 狼人投票选择目标
-  2. 预言家查验目标
-  3. 白天讨论
+  1. 狼人夜晚选择击杀目标
+  2. 预言家夜晚查验目标
+  3. 白天群聊讨论
   4. 全员投票
   5. 输出胜负结果
 
-产出建议：
+已实现文件：
 
 ```text
 agentscope/
@@ -122,6 +122,12 @@ agentscope/
 ├── roles.py
 ├── structured_outputs.py
 └── mini_werewolf.py
+```
+
+运行：
+
+```bash
+.venv/bin/python code/chapter06-frameworks/agentscope/mini_werewolf.py
 ```
 
 ## 🆚 AgentScope 与 AutoGen 的对比
@@ -148,7 +154,17 @@ agentscope/
 
 完成后，再进入两个 Agent 轮流对话。
 
+## ⚠️ 版本策略
+
+- 本目录先按 hello-agents 教程使用 **AgentScope 1.0.2**，便于对照教程中的 `Msg`、`ReActAgent`、`MsgHub`、`sequential_pipeline`、`fanout_pipeline`。
+- 官方当前文档以 **2.x** 为主，核心 API 已改为 `Agent`、`UserMsg`、`Toolkit`、`GoalPipeline`、`TeamPipeline`，与教程 1.x API 不兼容。
+- 不要混用 1.x 与 2.x。建议先完成教程版实践，再另开一个学习分支或目录研究官方 2.x。
+
 ## 🔗 相关链接
 
 - 教程原文：第六章 6.3 AgentScope
 - 教程示例：`hello-agents/code/chapter6/AgentScopeDemo`
+- 官方文档：<https://docs.agentscope.io/>
+- 官方 2.0.11 快速开始：<https://docs.agentscope.io/zh/versions/2.0.11/quickstart.md>
+- 官方 2.0.11 Agent 概述：<https://docs.agentscope.io/zh/versions/2.0.11/building-blocks/agent/overview.md>
+- 官方 2.0.11 Pipeline 概述：<https://docs.agentscope.io/zh/versions/2.0.11/building-blocks/pipeline/overview.md>
