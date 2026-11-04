@@ -86,4 +86,30 @@ code/chapter07-agent-framework/
 - 自建的价值：深度理解原理 + 完全控制权 + 系统设计能力
 - HelloAgents 设计理念：轻量级、基于 OpenAI 标准 API、统一工具抽象
 
-（后续笔记按小节补充…）
+### 7.2.1 多提供商支持（已完成 ✅）
+
+**实现**：`core/my_llm.py`，`MyLLM(HelloAgentsLLM)` 继承扩展
+- 拦截 `provider="modelscope"`：自己解析 `MODELSCOPE_API_KEY` → 校验 → 设默认参数 → 建 OpenAI 客户端
+- 其他 provider 走 `super().__init__()`，`think()`/`invoke()` 直接继承
+- 验收：父类路径（digiwin .env）invoke 正常；modelscope 无密钥时正确抛 ValueError
+
+**实测踩坑记录（错误码分层排查）**：
+
+| 错误码 | 真实原因 | 解法 |
+|---|---|---|
+| 401 Authentication failed | 拿 digiwin 的 key 冒充 MODELSCOPE_API_KEY —— 改变量名不改变 key 的身份 | 申请真正的 ModelScope key |
+| 400 no provider supported | 教程默认模型 `Qwen/Qwen2.5-VL-72B-Instruct` 已下架（ModelScope 模型目录已换代） | 显式传 `model="Qwen/Qwen3.5-27B"` |
+| 403 complete your profile | 账号未完成邮箱验证，推理服务对所有模型 403 | modelscope.cn/my/settings/account 完成验证 |
+
+**经验教训**：
+1. **一把钥匙开一把锁**——把 A 服务的 key 改名成 B 服务的变量名，不会让它变成 B 的 key
+2. **错误码分层解读**：401=身份错、400=资源不存在、403=身份对但权限不足；比笼统的"报错了"信息量大得多
+3. **模型列表有欺骗性**：`/v1/models` 返回 37 个 ≠ 都能调，以实测为准（部分模型上架未开通推理）
+4. **教程代码会过时**：教程写死的模型 ID 一年后可能下架，生产代码默认值要可覆盖
+5. 继承扩展的价值在排查中体现：拦截分支只改凭证解析，请求链路（URL/模型/流式）全部复用父类
+
+**最终验证**（2026-11-04）：
+```
+MyLLM(provider="modelscope", model="Qwen/Qwen3.5-27B")
+→ invoke 正常返回通义千问自我介绍
+```

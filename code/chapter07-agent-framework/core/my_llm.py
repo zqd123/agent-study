@@ -30,6 +30,7 @@ class MyLLM(HelloAgentsLLM):
         **kwargs
     ):
         # 步骤1: if provider == "modelscope":
+        # modelscope是模型供应商
         if provider == "modelscope":
             print("正在使用自定义的ModelScope Provider")
             self.provider = "modelscope"
@@ -44,7 +45,7 @@ class MyLLM(HelloAgentsLLM):
 
             # 设置默认模型和其他参数
             # 模型id
-            self.model = model or os.getenv("LLM_MODEL_ID") or "Qwen/Qwen2.5-VL-72B-Instruct"
+            self.model = model or os.getenv("LLM_MODEL_ID") or "Qwen/Qwen3.5-27"
             # 温度（大模型生成时的**随机度参数**，一般取值范围：**0 ~ 2**）
             # temperature 越低，回答越确定；越高，越发散。
             self.temperature = kwargs.get("temperature", 0.7)
