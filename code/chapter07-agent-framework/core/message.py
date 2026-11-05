@@ -11,33 +11,38 @@
 from datetime import datetime
 from typing import Any, Dict, Literal, Optional
 
+
 from pydantic import BaseModel
 
-# TODO 1: 定义消息角色类型（Literal）
-MessageRole = None  # 替换为 Literal[...]
+# 定义消息角色的类型，限制其取值
+MessageRole = Literal["user","assistant","system","tool"]
 
-
+# 定义了框架内统一的消息格式，确保了智能体与模型之间信息传递的标准化。
 class Message(BaseModel):
     """消息类"""
 
-    # TODO 2: 定义字段
-    # - content: str
-    # - role: MessageRole
-    # - timestamp: datetime（默认当前时间）
-    # - metadata: Optional[Dict[str, Any]]（默认空字典）
-    ...
+    content: str
+    role: MessageRole
+    timestamp: datetime = None
+    metadata: Optional[Dict[str, Any]] = None
 
     def __init__(self, content: str, role: MessageRole, **kwargs):
         # TODO 3: 调用 super().__init__，填充 timestamp 和 metadata 默认值
-        raise NotImplementedError
+        super().__init__(
+            content=content,
+            role=role,
+            timestamp=kwargs.get('timestamp',datetime.now()),
+            metadata=kwargs.get('metadata',{})
+        )
 
     def to_dict(self) -> Dict[str, Any]:
-        """转换为字典格式（OpenAI API 格式）。
-
-        TODO: 只返回 {"role": ..., "content": ...}
         """
-        raise NotImplementedError
+        转换为字典格式（OpenAI API 格式）。
+        """
+        return {
+            "role":self.role,
+            "content":self.content,
+        }
 
     def __str__(self) -> str:
-        # TODO: 返回 f"[{self.role}] {self.content}"
-        raise NotImplementedError
+       return f"[{self.role}] {self.content}"

@@ -14,39 +14,39 @@ from typing import Optional
 
 from pydantic import BaseModel
 
-
+# 将代码中硬编码配置参数集中起来，并支持从环境变量中读取。
 class Config(BaseModel):
     """HelloAgents 配置类"""
 
-    # TODO 1: LLM 配置
-    # - default_model: str = "gpt-3.5-turbo"
-    # - default_provider: str = "openai"
-    # - temperature: float = 0.7
-    # - max_tokens: Optional[int] = None
-    ...
+    # 1: LLM 配置
+    default_model: str = "gpt-3.5-turbo"
+    default_provider: str = "openai"
+    temperature: float = 0.7
+    max_tokens: Optional[int] = None
 
-    # TODO 2: 系统配置
-    # - debug: bool = False
-    # - log_level: str = "INFO"
-    ...
 
-    # TODO 3: 其他配置
-    # - max_history_length: int = 100
-    ...
+    # 系统配置
+    debug: bool = False
+    log_level: str = "INFO"
+
+
+    # 其他配置
+    max_history_length: int = 100
+
 
     @classmethod
     def from_env(cls) -> "Config":
-        """从环境变量创建配置。
-
-        TODO:
-        - DEBUG -> debug（"true"/"false" 转 bool）
-        - LOG_LEVEL -> log_level
-        - TEMPERATURE -> temperature
-        - MAX_TOKENS -> max_tokens（存在才设置）
         """
-        raise NotImplementedError
+        从环境变量创建配置。
+        """
+        return cls(
+            debug=os.getenv("DEBUG","false").lower() == "true",
+            log_level=os.getenv("LOG_LEVEL","INFO"),
+            temperature=float(os.getenv("TEMPERATURE","0.7")),
+            max_tokens=int(os.getenv("MAX_TOKENS")) if os.getenv("MAX_TOKENS") else None,
+        )
 
     def to_dict(self):
         """转换为字典"""
-        # TODO: return self.dict() 或 self.model_dump()
-        raise NotImplementedError
+        # return self.dict() 或 self.model_dump()
+        return self.model_dump()

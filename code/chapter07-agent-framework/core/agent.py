@@ -27,31 +27,29 @@ class Agent(ABC):
         system_prompt: Optional[str] = None,
         config: Optional[Config] = None,
     ) -> None:
-        # TODO 1: 保存 name / llm / system_prompt
-        # TODO 2: self.config = config or Config()
-        # TODO 3: self._history: List[Message] = []
-        ...
+        self.name = name
+        self.llm = llm
+        self.system_prompt = system_prompt
+        self.config = config or Config()
+        self._history: List[Message] = []
 
     @abstractmethod
     def run(self, input_text: str, **kwargs) -> str:
         """运行 Agent —— 子类必须实现。"""
-        ...
+        pass
 
     def add_message(self, message: Message) -> None:
         """添加消息到历史记录。"""
-        # TODO: self._history.append(message)
-        raise NotImplementedError
+        self._history.append(message)
 
     def clear_history(self) -> None:
         """清空历史记录。"""
-        # TODO: self._history.clear()
-        raise NotImplementedError
+        self._history.clear()
 
     def get_history(self) -> List[Message]:
         """获取历史记录（返回副本，防止外部修改内部状态）。"""
-        # TODO: return self._history.copy()
-        raise NotImplementedError
+        return self._history.copy()
 
     def __str__(self) -> str:
         # TODO: return f"Agent(name={self.name}, provider={self.llm.provider})"
-        raise NotImplementedError
+        return f"Agent(name={self.name},provider={self.llm.provider})"
