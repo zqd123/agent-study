@@ -1,0 +1,14 @@
+# agent-study 直接依赖清单
+# 安装：pip install -r requirements.txt
+# 传递依赖（openai、pydantic、requests、python-dotenv 等）由 pip 自动解析
+
+# 教程核心框架（pip 包，含 openai/dotenv/pydantic 等核心依赖）
+hello-agents==0.1.1
+
+# 搜索工具后端（对应 hello-agents[search] extra）
+# SearchTool 混合模式：Tavily 优先，SerpApi 兜底
+tavily-python==0.8.5
+google-search-results==2.4.2
+
+# 第六章 AgentScope 框架
+agentscope==1.0.2
